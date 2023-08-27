@@ -1,0 +1,107 @@
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://ZulNs.github.io/w3css/w3.css">
+
+    <style>
+        .w3-bar-item input[type=radio],
+        .w3-bar-item label {
+            cursor: pointer
+        }
+
+        .w3-bar-item:focus-within {
+            border-color: #2196F3 !important
+        }
+    </style>
+
+    <script>
+        window.console = window.console || function (t) { };
+    </script>
+
+
+
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+
+</head>
+
+<body translate="no" data-new-gr-c-s-check-loaded="14.1101.0" data-gr-ext-installed="">
+
+    
+        
+
+        <div id="calendar" class="w3-container w3-margin-top"></div>
+
+
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+    <script src="https://ZulNs.github.io/HijriDate.js/hijri-date.js"></script>
+    <script src="https://ZulNs.github.io/Calendar.js/calendar.js"></script>
+    <script id="rendered-js">
+        'use strict';
+        let cal = new Calendar();
+        cal.attachTo(document.getElementById('calendar'));
+
+        function openSidebar() {
+            document.getElementById("mySidebar").style.display = "block";
+        }
+
+        function closeSidebar() {
+            document.getElementById("mySidebar").style.display = "none";
+        }
+
+        function dropdown(el) {
+            if (el.className.indexOf('expanded') == -1) {
+                el.className = el.className.replace('collapsed', 'expanded');
+            } else {
+                el.className = el.className.replace('expanded', 'collapsed');
+            }
+        }
+
+        function selectLang(el) {
+            el.children[0].checked = true;
+            cal.setLanguage(el.children[0].value);
+        }
+
+        function setYear() {
+            let el = document.getElementById('valYear');
+            cal.setFullYear(el.value);
+        }
+
+        function setMonth() {
+            let el = document.getElementById('valMonth');
+            cal.setMonth(el.value);
+        }
+
+        function setTheme() {
+            let el = document.getElementById('txtTheme');
+            let n = parseInt(el.value);
+            if (!isNaN(n)) cal.setTheme(n); else
+                cal.setTheme(el.value);
+        }
+
+        function setTodayTimeout() {
+            let el = document.getElementById('valTimeout');
+            cal.setTodayTimeout(el.value);
+        }
+  //# sourceURL=pen.js
+    </script>
+    <style id="ZulNsCalendarStyle" type="text/css">
+        svg{stroke:currentColor;fill:currentColor;stroke-width:1}.w3-button{background-color:transparent}.w3-bar-item{border-left:6px solid transparent!important}.w3-bar-item:not(:disabled):hover{border-color:#f44336!important}.w3-bar-item:focus{border-color:#2196F3!important}.w3-bar-item.expanded{color:#fff;background-color:#616161}button.collapsed + div,button.collapsed>:nth-child(3),button.expanded>:nth-child(2){display:none!important}.right-to-left .w3-cell{float:right!important}.unbreakable{overflow:hidden;white-space:nowrap}</style><div class="w3-modal" id="ZulNsAbout" callback="null" style="display: none;"><div class="w3-modal-content w3-card-4 w3-border w3-display w3-black w3-animate-zoom" style="width: 440px; height: 300px; cursor: default;"><div class="w3-display-middle w3-bar w3-center"><p class="w3-xlarge" id="ZulNsAboutTitle"></p><p><span class="w3-tag w3-jumbo w3-red">Z</span>&nbsp;<span class="w3-tag w3-jumbo w3-yellow">u</span>&nbsp;<span class="w3-tag w3-jumbo w3-blue">l</span>&nbsp;<span class="w3-tag w3-jumbo w3-green">N</span>&nbsp;<span class="w3-tag w3-jumbo w3-purple">s</span></p><p class="w3-large" id="ZulNsAboutDate"></p></div><button class="w3-button w3-ripple w3-display-topright" id="ZulNsAboutCloseButton"><svg width="18" height="19"><path d="M5 9L5 10L8 13L5 16L5 17L6 17L9 14L12 17L13 17L13 16L10 13L13 10L13 9L12 9L9 12L6 9Z"></path></svg></button></div></div><style id="ZulNsCalendarStyle" type="text/css">svg{stroke:currentColor;fill:currentColor;stroke-width:1}.w3-button{background-color:transparent}.w3-bar-item{border-left:6px solid transparent!important}.w3-bar-item:not(:disabled):hover{border-color:#f44336!important}.w3-bar-item:focus{border-color:#2196F3!important}.w3-bar-item.expanded{color:#fff;background-color:#616161}button.collapsed + div,button.collapsed>:nth-child(3),button.expanded>:nth-child(2){display:none!important}.right-to-left .w3-cell{float:right!important}.unbreakable{overflow:hidden;white-space:nowrap}</style><div class="w3-modal" id="ZulNsAbout" callback="null" style="display: none;"><div class="w3-modal-content w3-card-4 w3-border w3-display w3-black w3-animate-zoom" style="width: 440px; height: 300px; cursor: default;"><div class="w3-display-middle w3-bar w3-center"><p class="w3-xlarge" id="ZulNsAboutTitle"></p><p><span class="w3-tag w3-jumbo w3-red">Z</span>&nbsp;<span class="w3-tag w3-jumbo w3-yellow">u</span>&nbsp;<span class="w3-tag w3-jumbo w3-blue">l</span>&nbsp;<span class="w3-tag w3-jumbo w3-green">N</span>&nbsp;<span class="w3-tag w3-jumbo w3-purple">s</span></p><p class="w3-large" id="ZulNsAboutDate"></p></div><button class="w3-button w3-ripple w3-display-topright" id="ZulNsAboutCloseButton"><svg width="18" height="19"><path d="M5 9L5 10L8 13L5 16L5 17L6 17L9 14L12 17L13 17L13 16L10 13L13 10L13 9L12 9L9 12L6 9Z"></path></svg></button></div></div><style id="ZulNsCalendarStyle" type="text/css">svg{stroke:currentColor;fill:currentColor;stroke-width:1}.w3-button{background-color:transparent}.w3-bar-item{border-left:6px solid transparent!important}.w3-bar-item:not(:disabled):hover{border-color:#f44336!important}.w3-bar-item:focus{border-color:#2196F3!important}.w3-bar-item.expanded{color:#fff;background-color:#616161}button.collapsed + div,button.collapsed>:nth-child(3),button.expanded>:nth-child(2){display:none!important}.right-to-left .w3-cell{float:right!important}.unbreakable{overflow:hidden;white-space:nowrap}</style>
+    
+    
+
+
+
+
+
+
+
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+</body>
+</html>

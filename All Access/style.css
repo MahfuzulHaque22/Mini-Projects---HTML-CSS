@@ -1,0 +1,48 @@
+.calendar {
+    width: 300px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .month {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .year {
+    font-size: 18px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .days td {
+    cursor: pointer;
+  }
+  
+  .days td:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .today {
+    background-color: #f2f2f2;
+  }
+  
+  .ramadan {
+    background-color: #E6B0AA;
+  }
+  

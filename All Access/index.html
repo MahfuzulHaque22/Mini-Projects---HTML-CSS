@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Access Request Example</title>
+	<style>
+		h1, p {
+			margin: 10px;
+		}
+		#location, #camera, #microphone, #files {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Access Request Example</h1>
+	<p>Click the button below to request access to your location, camera, microphone, and files:</p>
+	<button onclick="requestAccess()">Request Access</button>
+	<div id="location"></div>
+	<div id="camera"></div>
+	<div id="microphone"></div>
+	<div id="files"></div>
+	
+	<script>
+		function requestAccess() {
+			// Request access to location
+			navigator.geolocation.getCurrentPosition(function(position) {
+				document.getElementById("location").innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+				document.getElementById("location").style.display = "block";
+			});
+			
+			// Request access to camera
+			navigator.mediaDevices.getUserMedia({ video: true })
+				.then(function(stream) {
+					var video = document.createElement('video');
+					video.srcObject = stream;
+					video.autoplay = true;
+					document.getElementById("camera").appendChild(video);
+					document.getElementById("camera").style.display = "block";
+				});
+			
+			// Request access to microphone
+			navigator.mediaDevices.getUserMedia({ audio: true })
+				.then(function(stream) {
+					var audio = document.createElement('audio');
+					audio.srcObject = stream;
+					audio.autoplay = true;
+					document.getElementById("microphone").appendChild(audio);
+					document.getElementById("microphone").style.display = "block";
+				});
+			
+			// Request access to files
+			var input = document.createElement('input');
+			input.type = 'file';
+			input.onchange = function(event) {
+				var file = event.target.files[0];
+				var reader = new FileReader();
+				reader.onload = function() {
+					document.getElementById("files").innerHTML = "File name: " + file.name + "<br>File type: " + file.type + "<br>File size: " + file.size;
+					document.getElementById("files").style.display = "block";
+				};
+				reader.readAsDataURL(file);
+			};
+			input.click();
+		}
+	</script>
+</body>
+</html>
