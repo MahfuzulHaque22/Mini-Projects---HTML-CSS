@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--========== BOX ICONS ==========-->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+        
+
+        <title>BAUST - Academic Calander</title>
+        <link rel="icon" type="image/png" href="favicon.ico"/>
+
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    </head>
+
+
+
+    <body>
+
+         <!--=========== slide menu ============-->
+        <div class="sidebar" style="z-index: 10000000;">
+            <div class="logo_content">
+              <div class="logo">
+                
+                <div class="logo_name" style="color: var(--title-color);"> </div>
+              </div>
+              <i class='bx bx-menu' style='color:#1f3ae2'id="btn"  ></i>
+             
+            </div>
+            <ul class="nav_list">
+            
+              <li>
+                <a href="#">
+                    <i class='bx bxs-home-smile ' style='color:#1f3ae2' ></i>
+                    <span class="links_name">Home</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Home</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxs-book-reader bx-tada' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Batch</span>
+                </a>
+                <span class="tooltip"style="color: #1F3AE2;">Batch</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxs-user-circle' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Club</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Club</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxs-backpack' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Campus</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Campus</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxl-spring-boot' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Hall Management</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Hall</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bx-search-alt' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Group</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Group</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxs-category-alt' style='color:#1f3ae2' ></i>
+                  <span class="links_name">Libaray</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Libaray</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bxs-donate-heart' style='color:#1f3ae2' ></i>
+                  <span class="links_name">Help Center</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Help</span>
+              </li>
+              <li>
+                <a href="#">
+                    <i class='bx bx-command' style='color:#1f3ae2'  ></i>
+                  <span class="links_name">Communication</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Connect</span>
+              </li>
+
+              <li>
+                <a href="#">
+                    <i class='bx bxs-exit' style='color:#1f3ae2' ></i>
+                  <span class="links_name">Log Out</span>
+                </a>
+                <span class="tooltip" style="color: #1F3AE2;">Sign Out</span>
+              </li>
+            </ul>
+         
+          </div>
+           
+        
+          <script>
+           let btn = document.querySelector("#btn");
+           let sidebar = document.querySelector(".sidebar");
+           let searchBtn = document.querySelector(".bx-search");
+        
+           btn.onclick = function() {
+             sidebar.classList.toggle("active");
+           }
+           searchBtn.onclick = function() {
+             sidebar.classList.toggle("active");
+           }
+        
+          </script>
+     
+
+
+
+        <!--========== SCROLL TOP ==========-->
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class='bx bx-chevron-up scrolltop__icon'></i>
+        </a>
+
+        <!--========== HEADER ==========-->
+        <header class="l-header" id="header">
+
+
+        
+            <nav class="nav bd-container">
+                <a href="#" class="nav__logo">BAUST</a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Batch</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">Routine</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Department</a></li>
+                        <li class="nav__item"><a href="#menu" class="nav__link">Research</a></li>
+                        <li class="nav__item"><a href="#course" class="nav__link">Result</a></li>
+                        <li class="nav__item"><a href="#calander" class="nav__link">Teusion Fee</a></li>
+
+                       
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+            
+        </header>
+       
+        
+        
+    
+
+
+        <main class="l-main">
+
+
+
+            <!--========== HOME ==========-->
+            <br>
+            <br>
+            <br>
+      
+
+
+
+            
+            <!--========== Notice ==========-->
+            <br>
+            <br>
+            <br>
+            <section class="about section bd-container" id="about" style="height: 500px; overflow: hidden;">
+                <div class="calendar">
+                 <br>
+                 <br>
+                 <div class="col leftCol">
+                   <div class="content">
+                     <h1 class="date">February<span></span></h1>
+                     <div class="notes">
+                         <h4>Events</h4>
+                       <ul class="noteList">
+                         <li style="color: #1F3AE2;">Valentine's Day<a href="#" title="Remove note" class="removeNote animate"></a></li>
+                       </ul>
+                     </div>
+                   </div>
+                 </div>
+            
+                 <div class="col rightCol">
+                   <div class="content">
+                     <h2 class="year">2021</h2>
+                     <ul class="months">
+                      <li><a href="F:\Study\6th Semester (L-3 T-2)\Web Enginnering Project\Group\B Calander\January.html" title="Jan" data-value="1">Jan</a></li>
+                      <li><a href="F:\Study\6th Semester (L-3 T-2)\Web Enginnering Project\Group\B Calander\fab.html" title="Feb" data-value="2"class="selected">Feb</a></li>
+                      <li><a href="#" title="Mar" data-value="3">Mar</a></li>
+                      <li><a href="#" title="Apr" data-value="4">Apr</a></li>
+                      <li><a href="#" title="May" data-value="5">May</a></li>
+                      <li><a href="#" title="Jun" data-value="6">Jun</a></li>
+                      <li><a href="#" title="Jul" data-value="7">Jul</a></li>
+                      <li><a href="#" title="Aug" data-value="8">Aug</a></li>
+                      <li><a href="#" title="Sep" data-value="9" >Sep</a></li>
+                      <li><a href="#" title="Oct" data-value="10">Oct</a></li>
+                      <li><a href="#" title="Nov" data-value="11">Nov</a></li>
+                      <li><a href="#" title="Dec" data-value="12">Dec</a></li>
+                    </ul>
+                     <div class="clearfix"></div>
+                     <ul class="weekday">
+                       <li><a href="#" title="Mon" data-value="1">FRI</a></li>
+                       <li><a href="#" title="Tue" data-value="2">SAT</a></li>
+                       <li><a href="#" title="Wed" data-value="3">SUN</a></li>
+                       <li><a href="#" title="Thu" data-value="4">MON</a></li>
+                       <li><a href="#" title="Fri" data-value="5">TUE</a></li>
+                       <li><a href="#" title="Say" data-value="6">WED</a></li>
+                       <li><a href="#" title="Sun" data-value="7">THU</a></li>
+                     </ul>
+                     <div class="clearfix"></div>
+                     <ul class="days">
+                       <script>
+                         for( var _i = 1; _i <= 31; _i += 1 ){
+                           var _addClass = '';
+                           if( _i === 14){ _addClass = ' class="selected"'; }
+                           
+                           switch( _i ){
+                             case 8:
+                             case 10:
+                             case 27:
+                               _addClass = ' class="event"';
+                             break;
+                           }
+            
+                           document.write( '<li><a href="#" title="'+_i+'" data-value="'+_i+'"'+_addClass+'>'+_i+'</a></li>' );
+                         }
+                       </script>
+                     </ul>
+                     <div class="clearfix"></div>
+                   </div>
+                 </div>
+             </section>
+            
+
+
+
+            
+          
+
+
+
+
+
+
+
+        <!--========== FOOTER ==========-->
+        <footer class="footer section bd-container">
+            <div class="footer__container bd-grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">BAUST</a>
+                    <span class="footer__description">Student Dashboard</span>
+                    <div>
+                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                    </div>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">More</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Photo Gallary</a></li>
+                        <li><a href="#" class="footer__link">Test Program</a></li>
+                        <li><a href="#" class="footer__link">Student Well Fair Community</a></li>
+   
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Information</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Event</a></li>
+  
+                        <li><a href="#" class="footer__link">Privacy policy</a></li>
+                        <li><a href="#" class="footer__link">Terms of services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Contract</h3>
+                    <ul>
+                        <li>Saidpur Cantonment, Saidpur</li>
+                        <li>01769 675551</li>
+                        <li> 05526-73300</li>
+                        <li>info@baust.edu.bd</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="footer__copy">&#169; 2021 BAUST , All right reserved</p>
+        </footer>
+
+        <!--========== SCROLL REVEAL ==========-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <!--========== MAIN JS ==========-->
+        <script src="assets/js/main.js"></script>
+    </body>
+</html>
