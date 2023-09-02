@@ -1,0 +1,689 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Face Motion Reacter</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        body:before {
+            content: "loading";
+            position: absolute;
+            -webkit-animation: load 1s linear infinite;
+            animation: load 1s linear infinite;
+            left: calc(50% - 20px);
+            font-size: 12px;
+        }
+
+        @-webkit-keyframes load {
+            0% {
+                content: "loading";
+            }
+
+            25% {
+                content: "loading.";
+            }
+
+            50% {
+                content: "loading..";
+            }
+
+            75% {
+                content: "loading...";
+            }
+
+            100% {
+                content: "loading....";
+            }
+        }
+
+        @keyframes load {
+            0% {
+                content: "loading";
+            }
+
+            25% {
+                content: "loading.";
+            }
+
+            50% {
+                content: "loading..";
+            }
+
+            75% {
+                content: "loading...";
+            }
+
+            100% {
+                content: "loading....";
+            }
+        }
+
+        body .wrapper,
+        body video,
+        body .canvas_holder,
+        body canvas {
+            opacity: 0;
+        }
+
+        body.loaded .wrapper,
+        body.loaded video,
+        body.loaded .canvas_holder,
+        body.loaded canvas {
+            -webkit-animation: fadeIn 0.5s ease-in-out 1 forwards;
+            animation: fadeIn 0.5s ease-in-out 1 forwards;
+            -webkit-animation-delay: 2.5s;
+            animation-delay: 2.5s;
+        }
+
+        @-webkit-keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        body.loaded video {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+
+        body canvas,
+        body .canvas_holder {
+            position: absolute;
+            width: 640px;
+            height: 480px;
+            left: calc(50% - 320px);
+            top: calc(50% - 240px);
+        }
+
+        body .canvas_holder:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            box-shadow: inset 0 0 20px 1px #000;
+            z-index: 2;
+        }
+
+        body video {
+            position: absolute;
+            left: calc(50% - 400px);
+            top: calc(50% - 300px);
+            transform-style: preserve-3d;
+            width: 160px !important;
+            height: 120px !important;
+            z-index: 9;
+        }
+
+        .face {
+            background: #c4e0e5;
+            border-radius: 100%;
+            transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            perspective: 500px;
+            box-shadow: inset -10px -40px 60px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .face .ring {
+            transform-style: preserve-3d;
+            position: absolute;
+            width: 160%;
+            height: 160%;
+            box-shadow: inset 0 0 0 50px rgba(255, 255, 255, 0.125);
+            border-radius: 100%;
+            top: -45%;
+            left: -30%;
+            transform: rotateX(60deg);
+        }
+
+        .face .ring div {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            left: 0;
+            top: 0;
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25) transparent transparent transparent;
+            border-radius: 100%;
+            -webkit-animation: rotate 2s linear infinite;
+            animation: rotate 2s linear infinite;
+        }
+
+        .face .ring div:nth-of-type(1) {
+            -webkit-animation-delay: -0.125s;
+            animation-delay: -0.125s;
+            width: 98%;
+            height: 98%;
+            left: calc(50% - 49%);
+            top: calc(50% - 49%);
+        }
+
+        .face .ring div:nth-of-type(2) {
+            -webkit-animation-delay: -0.25s;
+            animation-delay: -0.25s;
+            width: 94%;
+            height: 94%;
+            left: calc(50% - 47%);
+            top: calc(50% - 47%);
+        }
+
+        .face .ring div:nth-of-type(3) {
+            -webkit-animation-delay: -0.375s;
+            animation-delay: -0.375s;
+            width: 90%;
+            height: 90%;
+            left: calc(50% - 45%);
+            top: calc(50% - 45%);
+        }
+
+        .face .ring div:nth-of-type(4) {
+            -webkit-animation-delay: -0.5s;
+            animation-delay: -0.5s;
+            width: 86%;
+            height: 86%;
+            left: calc(50% - 43%);
+            top: calc(50% - 43%);
+        }
+
+        .face .ring div:nth-of-type(5) {
+            -webkit-animation-delay: -0.625s;
+            animation-delay: -0.625s;
+            width: 82%;
+            height: 82%;
+            left: calc(50% - 41%);
+            top: calc(50% - 41%);
+        }
+
+        .face .ring div:nth-of-type(6) {
+            -webkit-animation-delay: -0.75s;
+            animation-delay: -0.75s;
+            width: 78%;
+            height: 78%;
+            left: calc(50% - 39%);
+            top: calc(50% - 39%);
+        }
+
+        @-webkit-keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .star {
+            width: 2px;
+            height: 2px;
+            border-radius: 100%;
+            background: #fff;
+        }
+
+        .eye {
+            z-index: 9;
+            border-radius: 100%;
+        }
+
+        .eye:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #666 2px, #222 2px, #222 20px);
+            background-position: 17.5px 3px;
+            border-radius: 100%;
+            -webkit-animation: blink 3s ease-in-out infinite;
+            animation: blink 3s ease-in-out infinite;
+        }
+
+        @-webkit-keyframes blink {
+            90% {
+                transform: scaleY(1);
+            }
+
+            92% {
+                transform: scaleY(0);
+            }
+
+            93% {
+                transform: scaleY(1);
+            }
+
+            94% {
+                transform: scaleY(0);
+            }
+
+            92% {
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes blink {
+            90% {
+                transform: scaleY(1);
+            }
+
+            92% {
+                transform: scaleY(0);
+            }
+
+            93% {
+                transform: scaleY(1);
+            }
+
+            94% {
+                transform: scaleY(0);
+            }
+
+            92% {
+                transform: scaleY(1);
+            }
+        }
+
+        .mouth:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            border-radius: 100%;
+            border: 10px solid #222;
+            border-color: transparent transparent #222 #222;
+            transform: rotate(-45deg);
+        }
+
+        .mouth:after {
+            content: "";
+            position: absolute;
+            background: #222;
+            border-radius: 100%;
+            top: calc(50% + 5px);
+            box-shadow: 45px 0 0 0 #222;
+            width: 10px;
+            height: 10px;
+        }
+
+        .wrapper {
+            width: 620px;
+            height: 480px;
+            position: absolute;
+            left: calc(50% - 310px);
+            top: calc(50% - 240px);
+            z-index: 3;
+            overflow: hidden;
+            box-shadow: 0 20px 20px -10px rgba(0, 0, 0, 0.25);
+        }
+
+        .wrapper .stars {
+            position: absolute;
+            width: 400%;
+            height: 400%;
+            top: -100%;
+            left: -100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 0.75px, transparent 0.5px), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 0.75px, transparent 0.5px), radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 0.5px, transparent 0.5px), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 0.5px, transparent 0.5px), radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 1px, transparent 0.5px);
+            background-size: 200px 200px, 300px 300px, 150px 150px, 200px 200px, 110px 110px;
+            background-position: 20px, 40px, 80px, 20px, 80px, 100px;
+        }
+
+        .wrapper div {
+            transition: 0.05s linear;
+            will-change: top, left;
+            transform-style: preserve-3d;
+        }
+    </style>
+
+    <script>
+        window.console = window.console || function (t) { };
+    </script>
+
+
+
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+
+</head>
+
+<body translate="no" class="loaded" data-new-gr-c-s-check-loaded="14.1098.0" data-gr-ext-installed="">
+    <div class="canvas_holder" id="canvas_holder"><canvas id="defaultCanvas0" class="p5Canvas" width="1280" height="960"
+            style="width: 640px; height: 480px;"></canvas></div>
+    <script src="index.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.2.2/dist/ml5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script id="rendered-js">
+        const PIXEL_SIZE = 80;
+        const DEFAULT_COLOR = 'rgba(0,0,0, 0.0)';
+
+        const SPACE_WIDTH = 640;
+
+        const SPACE_HEIGHT = 480;
+
+        // const PIXEL_FADE_TIME = '8n';
+
+
+        let video;
+        let poseNet;
+        let poses = [];
+
+
+        function setup() {
+            var canvas = createCanvas(640, 480);
+            canvas.parent('canvas_holder');
+            pg = createGraphics(width, height);
+            background(0);
+            space = new PixelSpace();
+            space.setup_space(640, 480);
+
+            wrapDiv = createDiv('<div class="stars one"></div><div class="stars two"></div>').class("wrapper");
+            faceDiv = createDiv('<div class="ring"><div></div><div></div><div></div><div></div><div></div><div></div></div>').class('face').parent(wrapDiv);
+            faceDiv.position(0, 0);
+            $faceDiv = $('.face');
+            eyeDiv = createDiv().class('eye left').parent(wrapDiv);
+            eyeDiv.position(0, 0);
+            $eyeDiv = $('.left');
+            eyeDiv2 = createDiv().class('eye right').parent(wrapDiv);
+            eyeDiv2.position(0, 0);
+            $eyeDiv2 = $('.right');
+            mouthDiv = createDiv().class('mouth').parent(wrapDiv);
+            mouthDiv.position(0, 0);
+            $mouthDiv = $('.mouth');
+            $ring = $('.ring');
+            $starDiv1 = $('.stars.one');
+            $starDiv2 = $('.stars.two');
+
+
+            video = createCapture(VIDEO);
+            video.size(width, height);
+
+            humanoid = new Humanoid();
+            poseNet = ml5.poseNet(video, { detectionType: 'single', flipHorizontal: false }, modelReady);
+            poseNet.on('pose', function (results) {
+                poses = results;
+                for (let i = 0; i < poses.length; i++) {
+                    if (window.CP.shouldStopExecution(0)) break;
+                    if (poses[i].pose.score > 0.1) {
+                        humanoid.setPose(poses[i]);
+                    }
+                } window.CP.exitedLoop(0);
+            });
+        }
+
+        function draw() {
+            image(pg, 0, 0, width, height);
+            background(0);
+            humanoid.drawPoseTrail();
+
+        }
+
+        function modelReady() {
+            // select('#status').html('Model Loaded');
+        }
+
+
+
+        function PixelSpace() {
+            this.width = 0;
+            this.height = 0;
+
+            this.setup_space = function (width, height) {
+                this.width = width;
+                this.height = height;
+
+            };
+        }
+
+        function Humanoid() {
+            this.nose = {};
+            this.eyes = { "left": {}, "right": {} };
+            this.ears = { "left": {}, "right": {} };
+            this.shoulders = { "left": {}, "right": {} };
+            this.elbows = { "left": {}, "right": {} };
+            this.wrists = { "left": {}, "right": {} };
+            this.hips = { "left": {}, "right": {} };
+            this.knees = { "left": {}, "right": {} };
+            this.ankles = { "left": {}, "right": {} };
+            this.face_width = 0;
+            this.eye_width = 0;
+            this.nose_width = 0;
+
+
+
+            this.poseHistory = []; // array of last 10 poses
+
+
+            this.setPose = function (pose_object) {
+
+
+                var pose = pose_object.pose;
+
+                for (let j = 0; j < pose.keypoints.length; j++) {
+                    if (window.CP.shouldStopExecution(1)) break;
+                    let keypoint = pose.keypoints[j];
+                    if (keypoint.part == "nose") {
+                        this.nose = keypoint.position;
+                    } else if (keypoint.part == "leftEye") {
+                        this.eyes.left = keypoint.position;
+                    } else if (keypoint.part == "rightEye") {
+                        this.eyes.right = keypoint.position;
+                    } else if (keypoint.part == "leftEar") {
+                        this.ears.left = keypoint.position;
+                    } else if (keypoint.part == "rightEar") {
+                        this.ears.right = keypoint.position;
+                    } else if (keypoint.part == "leftShoulder") {
+                        this.shoulders.left = keypoint.position;
+                    } else if (keypoint.part == "rightShoulder") {
+                        this.shoulders.right = keypoint.position;
+                    } else if (keypoint.part == "leftElbow") {
+                        this.elbows.left = keypoint.position;
+                    } else if (keypoint.part == "rightElbow") {
+                        this.elbows.right = keypoint.position;
+                    } else if (keypoint.part == "leftWrist") {
+                        this.wrists.left = keypoint.position;
+                    } else if (keypoint.part == "rightWrist") {
+                        this.wrists.right = keypoint.position;
+                    } else if (keypoint.part == "leftHip") {
+                        this.hips.left = keypoint.position;
+                    } else if (keypoint.part == "rightHip") {
+                        this.hips.right = keypoint.position;
+                    } else if (keypoint.part == "leftKnee") {
+                        this.knees.left = keypoint.position;
+                    } else if (keypoint.part == "rightKnee") {
+                        this.knees.right = keypoint.position;
+                    } else if (keypoint.part == "leftAnkle") {
+                        this.ankles.left = keypoint.position;
+                    } else if (keypoint.part == "rightAnkle") {
+                        this.ankles.right = keypoint.position;
+                    }
+                } window.CP.exitedLoop(1);
+
+                this.face_width = this.ears.left.x - this.ears.right.x;
+                this.eye_width = this.face_width / 5;
+                this.nose_width = this.face_width / 1.5;
+
+            };
+
+            this.addToHistory = function (hum) {
+                this.poseHistory.push(hum);
+                if (this.poseHistory.length > 20) {
+                    this.poseHistory.splice(0, 1);
+                }
+            };
+
+            this.drawPoseTrail = function () {
+                drawPose(this);
+            };
+
+        }
+
+
+
+
+        function drawPose(hum) {
+
+            TweenMax.to($faceDiv, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.ears.right.x - hum.nose.y / 3) + 'px) translateY(' + (hum.nose.y - hum.face_width / 1.5) + 'px) scale(' + (hum.face_width - hum.face_width / 1.005 - 0.15) + ')',
+                    width: '300px',
+                    height: '300px'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            //eyes
+            TweenMax.to($eyeDiv, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.eyes.left.x / 1.15 + 20) + 'px) translateY(' + (hum.eyes.left.y + 20) + 'px) scale(' + (hum.face_width - hum.face_width / 1.005 - 0.15) + ')',
+                    width: '20px',
+                    height: '20px'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            TweenMax.to($eyeDiv2, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.eyes.right.x / 1.15 + 30) + 'px) translateY(' + (hum.eyes.right.y + 20) + 'px) scale(' + (hum.face_width - hum.face_width / 1.005 - 0.15) + ')',
+                    width: '20px',
+                    height: '20px'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            TweenMax.to($mouthDiv, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.nose.x / 1.25 + 35) + 'px) translateY(' + (hum.nose.y - 10) + 'px) scale(' + (hum.face_width - hum.face_width / 1.005 - 0.35) + ') rotate(' + (hum.eyes.left.y - hum.eyes.right.y) / 1.25 + 'deg)',
+                    width: '35px',
+                    height: '35px'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            TweenMax.to($ring, 0.3, {
+                css: {
+                    transform: 'rotateX(' + (hum.eyes.left.y / 7 + 40) + 'deg) rotateY(' + (hum.eyes.left.y - hum.eyes.right.y) / -3 + 'deg)'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            TweenMax.to($starDiv1, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.ears.right.x - hum.nose.y / 1) * -1 / 8 + 'px) translateY(' + (hum.nose.y - hum.face_width / 1.5) * -1 / 8 + 'px) rotate(45deg)'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+            TweenMax.to($starDiv2, 0.1, {
+                css: {
+                    transform: 'translatex(' + (hum.ears.right.x - hum.nose.y / 0.5) * -1 / 10 + 'px) translateY(' + (hum.nose.y - hum.face_width / 1) * -1 / 7 + 'px) scale(0.5)'
+                },
+
+                ease: Expo.easeOut,
+                overwrite: 'all'
+            });
+
+
+
+        }
+
+
+        $(window).bind("load", function () {
+            $("body").addClass("loaded");
+        });
+  //# sourceURL=pen.js
+    </script>
+
+
+
+
+
+
+
+    <canvas width="1280" height="960" style="display: none; width: 640px; height: 480px;"></canvas>
+    <div class="wrapper">
+        <div class="stars one"
+            style="transform: matrix3d(0.70711, 0.70711, 0, 0, -0.70711, 0.70711, 0, 0, 0, 0, 1, 0, 8.54391, -25.5491, 0, 1);">
+        </div>
+        <div class="stars two" style="transform: translate3d(37.9641px, -21.5635px, 0px) scale(0.5, 0.5);"></div>
+        <div class="face"
+            style="position: absolute; left: 0px; top: 0px; height: 300px; width: 300px; transform: translate3d(139.175px, 204.393px, 0px) scale(0.647738, 0.647738);">
+            <div class="ring"
+                style="transform: matrix3d(0.999675, 0.0250054, -0.00511109, 0, -8.41735e-06, 0.200584, 0.979684, 0, 0.0255228, -0.979375, 0.200521, 0, 0, 0, 0, 1);">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="eye left"
+            style="position: absolute; left: 0px; top: 0px; height: 20px; width: 20px; transform: translate3d(330.425px, 289.544px, 0px) scale(0.647738, 0.647738);">
+        </div>
+        <div class="eye right"
+            style="position: absolute; left: 0px; top: 0px; height: 20px; width: 20px; transform: translate3d(278.875px, 294.252px, 0px) scale(0.647738, 0.647738);">
+        </div>
+        <div class="mouth"
+            style="position: absolute; left: 0px; top: 0px; height: 35px; width: 35px; transform: matrix3d(0.446765, -0.0294114, 0, 0, 0.0294114, 0.446765, 0, 0, 0, 0, 1, 0, 294.242, 301.29, 0, 1);">
+        </div>
+    </div><video playsinline="" crossorigin="anonymous" width="640" height="480"
+        style="width: 640px; height: 480px;"></video>
+</body>
+
+</html>
